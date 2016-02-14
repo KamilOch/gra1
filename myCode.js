@@ -1,5 +1,7 @@
 		var sketchProc=function(processingInstance){ with (processingInstance){
-
+// NIE RUSZAĆ TEGO NA GÓRZE /\ 
+		
+		
 size(400, 400); 
 frameRate(30);
 
@@ -24,5 +26,5 @@ ellipse(mouseX, mouseY, 60, 60);
 };
 
 
-
+// NIE RUSZAĆ TEGO POD SPODEM \/ 
 		}};
