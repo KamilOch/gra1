@@ -4,7 +4,7 @@ size(400, 400);
 frameRate(30);
 
 
-background(255, 255, 255);
+background(0, 255, 0);
 
 // tomato
 noStroke();
