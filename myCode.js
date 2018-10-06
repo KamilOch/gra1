@@ -9,21 +9,23 @@ frameRate(30);
 //Sterowanie graczami , strzalkami , animacja , 
 
 var graczJeden = {  
-    obrazek: getImage("cute/CharacterBoy"),
+    obrazek: requestImage("CharacterBoy.png"),
     xPosition: 50,
     yPosition: 150,
     keys: [],
     punkty: 0};
     
 var graczDwa = {  
-    obrazek: getImage("cute/CharacterCatGirl"),
+    obrazek: requestImage("CharacterCatGirl.png"),
     xPosition: 250,
     yPosition: 150,  
     keys: [],
     punkty: 0};
-    
+
+var serce = requestImage("healthheart.png");
+
 var bonus = {
-    obrazek: getImage("avatars/mr-pink"),
+    obrazek: requestImage("mr-pink.png"),
     xPosition:random(20, 260),
     yPosition:random(20, 260)};
 
@@ -98,7 +100,7 @@ draw =function () {
     
     // gdy gracze sie spotkaja(sa w mniejszej odleglosci niz 20 pixeli), pojawia sie         obrazek     (LEPSZA WERSJA)
     if(roznicaPolorzeniaGraczaX <20 && roznicaPolorzeniaGraczaY <20 ){
-        image(getImage("space/healthheart"),150,150,100,100);
+        image(serce,150,150,100,100);
     }
     // gdy gracz spotyka bobus dostaje extra punkty
     //gracz 1
