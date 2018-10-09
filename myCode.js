@@ -17,16 +17,14 @@ var Character = function (config){
     this.picture = config.picture;
     this.xPosition = config.xPosition;
     this.yPosition = config.yPosition;
-    this.keys [];
+    this.keys = [];
     this.points = 0;
     this.width = config.width ||40;
     this.height = config.height || 80;
 };
 
-
-
 var player1 = new Character ({
-name = "Gracz 1",
+name: "Gracz 1",
 picture: requestImage("CharacterBoy.png"),
 xPosition: sizeX*1/8,
 yPosition: sizeY*1/3
@@ -83,18 +81,20 @@ Character.prototype.draw = function() {
 
 
 
+
 draw =function () {
     //rysowanie tla
-    background (204, 247, 255);
+   background (204, 247, 255);
 
     // rysowanie graczy
     //image ((graczJeden.picture), graczJeden.xPosition, graczJeden.yPosition, 40, 80);
     //image ((graczDwa.picture), graczDwa.xPosition, graczDwa.yPosition, 40, 80);
-
+    player1.draw();
+    player2.draw();
 
     // rysowanie bonus
     image ((bonus.picture), bonus.xPosition, bonus.yPosition, 40, 40);
-    
+    /*
     // poruszanie sie graczJeden
     if(keyPressed && graczJeden.keys[100] && graczJeden.xPosition<(sizeX-35)) {
         // w prawo przycisk D
@@ -167,14 +167,13 @@ draw =function () {
         bonus.xPosition = random(20, 260);
         bonus.yPosition = random(20, 260);
     }
-   
+   */
     textSize(18);
     fill(0,0,0);
-    text("Punkty Gracz 1: " + graczJeden.points, 20, 30);
-    text("Punkty Gracz 2: " + graczDwa.points, 20, 59);
+    text("Punkty Gracz 1: " + player1.points, 20, 30);
+    text("Punkty Gracz 2: " + player2.points, 20, 59);
 
-    player1.draw();
-    player2.draw();
+
 
 };
 
