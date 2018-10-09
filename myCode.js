@@ -23,6 +23,8 @@ var Character = function (config){
     this.height = config.height || 80;
     this.speed = config.speed || 1;
 };
+
+
 // nowy gracz 1
 var player1 = new Character ({
 name: "Gracz 1",
@@ -46,28 +48,29 @@ var bonus = new Character ({
 });
 
 var serce = requestImage("healthheart.png");
-
+/*
 Character.prototype.keyPressed = function () {
     player1.keys [key.code] = true;
     player2.keys [key.code] = true;
+};*/
+
+var keyPressed = function () {
+    player1.keys [key.code] = true;
+    player2.keys [key.code] = true;
 };
+
 /*
-var keyPressed = function () { 
-    graczJeden.keys [key.code] = true;
-    graczDwa.keys [key.code] = true;
-};
- */
 Character.prototype.keyReleased = function () {
     player1.keys [key.code] = false;
     player2.keys [key.code] = false;
 
+};*/
+
+var keyReleased = function () {
+    player1.keys [key.code] = false;
+    player2.keys [key.code] = false;
 };
-/*
-var keyReleased = function () { 
-    graczJeden.keys [key.code] = false; 
-    graczDwa.keys [key.code] = false; 
-};
-*/
+
 Character.prototype.up = function() {
     this.yPosition -= this.speed;
 };
@@ -101,26 +104,40 @@ draw =function () {
     // poruszanie sie graczJeden
     // w prawo przycisk D
     if (keyPressed && player1.keys [100] && player1.xPosition<(sizeX-35)) {
-       player1.right();
+        player1.right();
+    };
+    // w lewo przycisk A
+    if (keyPressed && player1.keys [97] && player1.xPosition>-5) {
+        player1.left();
+    };
+    // do gory przycik W
+    if (keyPressed && player1.keys [119] && player1.yPosition>-30) {
+        player1.up();
+    };
+    //do dolu przycisk S
+    if (keyPressed && player1.keys [115] && player1.yPosition<(sizeY-65)) {
+    player1.down();
+    };
+
+    // poruszanie sie graczDwa
+    // w prawo przycisk L
+    if (keyPressed && player2.keys [108] && player2.xPosition<(sizeX-35)) {
+    player2.right();
+    };
+    // w lewo przycisk J
+    if (keyPressed && player2.keys [106] && player2.xPosition>-5){
+    player2.left();
+    };
+    // do gory przycik I
+    if (keyPressed && player2.keys [105] && player2.yPosition>-30){
+    player2.up();
+    };
+    //do dolu przycisk K
+    if (keyPressed && player2.keys[107] && player2.yPosition<(sizeY-65)){
+    player2.down();
     };
     /*
-    // poruszanie sie graczJeden
-    if(keyPressed && graczJeden.keys [100] && graczJeden.xPosition<(sizeX-35)) {
-        // w prawo przycisk D
-        graczJeden.xPosition ++;
-        }
-    if(keyPressed && graczJeden.keys[97] && graczJeden.xPosition>-5) {
-        // w lewo przycisk A
-        graczJeden.xPosition --; 
-    }
-    if(keyPressed && graczJeden.keys [119] && graczJeden.yPosition>-30) {
-        // do gory przycik W
-        graczJeden.yPosition --; 
-    }
-    if(keyPressed && graczJeden.keys [115] && graczJeden.yPosition<(sizeY+65)) {
-        //do dolu przycisk S
-        graczJeden.yPosition ++; 
-    }
+
     
     // poruszanie sie graczDwa
     if(keyPressed && graczDwa.keys [108] && graczDwa.xPosition<(sizeX-35)) {
