@@ -1,24 +1,42 @@
 		var sketchProc=function(processingInstance){ with (processingInstance){
 // NIE RUSZAĆ TEGO NA GÓRZE /\ 
 		
-		
-size(400, 400); 
+var sizeX = 600;
+var sizeY = 600;
+
+size(sizeX, sizeY);
 frameRate(30);
 
 
 //Sterowanie graczami , strzalkami , animacja , 
 
+// Konstruktor
+/*
+var Character = function (nickName, picture,xPosition, yPosition){
+    this nickName;
+    this.picture;
+    this.xPosition;
+    this.yPosition;
+    this.keys [];
+    this.points;
+};
+*/
+
+
+//var graczJeden = new Character ("Gracz 1", requestImage("CharacterBoy.png"),50,150);
+//var graczDwa = new Character ("Gracz 2",requestImage("CharacterCatGirl.png"), 250, 150);
+
 var graczJeden = {  
     obrazek: requestImage("CharacterBoy.png"),
-    xPosition: 50,
-    yPosition: 150,
+    xPosition: sizeX*1/8,
+    yPosition: sizeY*1/3,
     keys: [],
     punkty: 0};
     
 var graczDwa = {  
     obrazek: requestImage("CharacterCatGirl.png"),
-    xPosition: 250,
-    yPosition: 150,  
+    xPosition: sizeX*6/8,
+    yPosition: sizeY*1/3,
     keys: [],
     punkty: 0};
 
@@ -26,8 +44,8 @@ var serce = requestImage("healthheart.png");
 
 var bonus = {
     obrazek: requestImage("mr-pink.png"),
-    xPosition:random(20, 260),
-    yPosition:random(20, 260)};
+    xPosition:random(20, (sizeX-140)),
+    yPosition:random(20, (sizeY-140))};
 
 
 var keyPressed = function () { 
@@ -52,7 +70,7 @@ draw =function () {
     image ((bonus.obrazek), bonus.xPosition, bonus.yPosition, 40, 40);
     
     // poruszanie sie graczJeden
-    if(keyPressed && graczJeden.keys[100] && graczJeden.xPosition<365) {
+    if(keyPressed && graczJeden.keys[100] && graczJeden.xPosition<(sizeX-35)) {
         // w prawo przycisk D
         graczJeden.xPosition ++;
         }
@@ -64,13 +82,13 @@ draw =function () {
         // do gory przycik W
         graczJeden.yPosition --; 
     }
-    if(keyPressed && graczJeden.keys [115] && graczJeden.yPosition<335) {
+    if(keyPressed && graczJeden.keys [115] && graczJeden.yPosition<(sizeY+65)) {
         //do dolu przycisk S
         graczJeden.yPosition ++; 
     }
     
     // poruszanie sie graczDwa
-    if(keyPressed && graczDwa.keys [108] && graczDwa.xPosition<365) {
+    if(keyPressed && graczDwa.keys [108] && graczDwa.xPosition<(sizeX-35)) {
         // w prawo przycisk L
         graczDwa.xPosition ++;
     }
@@ -82,7 +100,7 @@ draw =function () {
         // do gory przycik I
         graczDwa.yPosition --; 
     }
-    if(keyPressed && graczDwa.keys[107] && graczDwa.yPosition<335){
+    if(keyPressed && graczDwa.keys[107] && graczDwa.yPosition<(sizeY+65)){
         //do dolu przycisk K
         graczDwa.yPosition ++; 
     }
