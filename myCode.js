@@ -48,29 +48,15 @@ var bonus = new Character ({
 });
 
 var serce = requestImage("healthheart.png");
-/*
-Character.prototype.keyPressed = function () {
-    player1.keys [key.code] = true;
-    player2.keys [key.code] = true;
-};*/
 
 var keyPressed = function () {
     player1.keys [key.code] = true;
     player2.keys [key.code] = true;
 };
-
-/*
-Character.prototype.keyReleased = function () {
-    player1.keys [key.code] = false;
-    player2.keys [key.code] = false;
-
-};*/
-
 var keyReleased = function () {
     player1.keys [key.code] = false;
     player2.keys [key.code] = false;
 };
-
 Character.prototype.up = function() {
     this.yPosition -= this.speed;
 };
@@ -86,10 +72,16 @@ Character.prototype.left = function() {
 
 var checkForPlayerCollision = function() {
 return abs(player1.xPosition - player2.xPosition) <=20 &&
-               abs(player1.yPosition - player2.yPosition)<=20;
+       abs(player1.yPosition - player2.yPosition)<=20;
 };
-
-
+var checkForPlayer1Catch = function() {
+return abs(player1.xPosition - bonus.xPosition) <35 &&
+       abs(player1.yPosition - (bonus.yPosition-30))<35;
+};
+var checkForPlayer2Catch = function() {
+return abs(player2.xPosition - bonus.xPosition) <35 &&
+       abs(player2.yPosition - (bonus.yPosition-30))<35;
+};
 
 
 Character.prototype.draw = function() {
@@ -143,54 +135,28 @@ draw =function () {
     if (keyPressed && player2.keys[107] && player2.yPosition<(sizeY-65)){
     player2.down();
     };
-    /*
 
-
-    
-    //sprawdzanie odleglosci miedzy graczami
-    var roznicaPolorzeniaGraczaX = abs((graczJeden.xPosition - graczDwa.xPosition));
-    var roznicaPolorzeniaGraczaY = abs((graczJeden.yPosition - graczDwa.yPosition));
-    // sprawdzanie odleglosci miedzy bonusem a graczem 1
-    var roznicaPolorzeniaBonusuGraczJedenX = abs((graczJeden.xPosition - bonus.xPosition));
-    var roznicaPolorzeniaBonusuGraczJedenY = abs((graczJeden.yPosition - (bonus.yPosition-30)));
-    
-     // sprawdzanie odleglosci miedzy bonusem a graczem 2
-    var roznicaPolorzeniaBonusuGraczDwaX = abs((graczDwa.xPosition - bonus.xPosition));
-    var roznicaPolorzeniaBonusuGraczDwaY = abs((graczDwa.yPosition - (bonus.yPosition-30)));
-    */
-    /*
     // gdy gracze sie spotkaja(sa w mniejszej odleglosci niz 20 pixeli), pojawia sie         obrazek     (LEPSZA WERSJA)
-    if(roznicaPolorzeniaGraczaX <20 && roznicaPolorzeniaGraczaY <20 ){
-        image(serce,150,150,100,100);
-    }
-    */
-
     if(checkForPlayerCollision()){
-    image(serce,150,150,100,100);
+    image(serce,sizeX*1/2 -50,sizeY*1/2-50,100,100);
     };
-    /*
-    // gdy gracz spotyka bobus dostaje extra punkty
+
+    // gdy gracz spotyka bobus dostaja punkty
     //gracz 1
-    if(roznicaPolorzeniaBonusuGraczJedenX <35 && roznicaPolorzeniaBonusuGraczJedenY <35 ){      //fill(0,0,0);
-        //textSize(30);
-        //text("Bonus Gracz",95,140);
-        //image(getImage("space/1"),150,150,100,100);
-        graczJeden.points +=10;
-        bonus.xPosition = random(20, 260);
-        bonus.yPosition = random(20, 260);
-        
-    }
+    if(checkForPlayer1Catch()){
+        player1.points +=10;
+       // bonus.xPosition = random(20, 260);
+       // bonus.yPosition = random(20, 260);
+
+    };
    //gracz 2
-    if(roznicaPolorzeniaBonusuGraczDwaX <35 && roznicaPolorzeniaBonusuGraczDwaY <35 ){
-        //fill(0,0,0);
-        //textSize(30);
-        //text("Bonus Gracz",95,140);
-        //image(getImage("space/2"),150,150,100,100);
-        graczDwa.points +=10;
-        bonus.xPosition = random(20, 260);
-        bonus.yPosition = random(20, 260);
-    }
-   */
+    if(checkForPlayer2Catch()){
+        player2.points +=10;
+        bonus.xPosition();
+        bonus.yPosition();
+
+     };
+    //Wyswietlanie punktow
     textSize(18);
     fill(0,0,0);
     text("Punkty " + player1.name + ": " + player1.points, 20, 30);
