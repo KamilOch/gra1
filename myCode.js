@@ -84,6 +84,13 @@ Character.prototype.left = function() {
     this.xPosition -= this.speed;
 };
 
+var checkForPlayerCollision = function() {
+return abs(player1.xPosition - player2.xPosition) <=20 &&
+               abs(player1.yPosition - player2.yPosition)<=20;
+};
+
+
+
 
 Character.prototype.draw = function() {
     //background (204, 247, 255);
@@ -138,24 +145,7 @@ draw =function () {
     };
     /*
 
-    
-    // poruszanie sie graczDwa
-    if(keyPressed && graczDwa.keys [108] && graczDwa.xPosition<(sizeX-35)) {
-        // w prawo przycisk L
-        graczDwa.xPosition ++;
-    }
-    if(keyPressed && graczDwa.keys [106] && graczDwa.xPosition>-5){
-        // w lewo przycisk J
-        graczDwa.xPosition --; 
-    }
-    if(keyPressed && graczDwa.keys [105] && graczDwa.yPosition>-30){
-        // do gory przycik I
-        graczDwa.yPosition --; 
-    }
-    if(keyPressed && graczDwa.keys[107] && graczDwa.yPosition<(sizeY+65)){
-        //do dolu przycisk K
-        graczDwa.yPosition ++; 
-    }
+
     
     //sprawdzanie odleglosci miedzy graczami
     var roznicaPolorzeniaGraczaX = abs((graczJeden.xPosition - graczDwa.xPosition));
@@ -167,11 +157,18 @@ draw =function () {
      // sprawdzanie odleglosci miedzy bonusem a graczem 2
     var roznicaPolorzeniaBonusuGraczDwaX = abs((graczDwa.xPosition - bonus.xPosition));
     var roznicaPolorzeniaBonusuGraczDwaY = abs((graczDwa.yPosition - (bonus.yPosition-30)));
-    
+    */
+    /*
     // gdy gracze sie spotkaja(sa w mniejszej odleglosci niz 20 pixeli), pojawia sie         obrazek     (LEPSZA WERSJA)
     if(roznicaPolorzeniaGraczaX <20 && roznicaPolorzeniaGraczaY <20 ){
         image(serce,150,150,100,100);
     }
+    */
+
+    if(checkForPlayerCollision()){
+    image(serce,150,150,100,100);
+    };
+    /*
     // gdy gracz spotyka bobus dostaje extra punkty
     //gracz 1
     if(roznicaPolorzeniaBonusuGraczJedenX <35 && roznicaPolorzeniaBonusuGraczJedenY <35 ){      //fill(0,0,0);
