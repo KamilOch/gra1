@@ -21,53 +21,64 @@ var Character = function (config){
     this.points = 0;
     this.width = config.width ||40;
     this.height = config.height || 80;
+    this.speed = config.speed || 1;
 };
-
+// nowy gracz 1
 var player1 = new Character ({
 name: "Gracz 1",
 picture: requestImage("CharacterBoy.png"),
 xPosition: sizeX*1/8,
 yPosition: sizeY*1/3
 });
-
+// nowy gracz 2
 var player2 = new Character ({
 name: "Gracz 2",
 picture: requestImage("CharacterCatGirl.png"),
 xPosition: sizeX*6/8,
 yPosition: sizeY*1/3
 });
+// nowy bonus
+var bonus = new Character ({
+    picture: requestImage("mr-pink.png"),
+    xPosition: random(20, (sizeX-140)),
+    yPosition: random(20, (sizeY-140)),
+    height: 40
+});
 
-/*
-var graczJeden = {
-    picture: requestImage("CharacterBoy.png"),
-    xPosition: sizeX*1/8,
-    yPosition: sizeY*1/3,
-    keys: [],
-    points: 0};
-
-var graczDwa = {  
-    picture: requestImage("CharacterCatGirl.png"),
-    xPosition: sizeX*6/8,
-    yPosition: sizeY*1/3,
-    keys: [],
-    points: 0};
-*/
 var serce = requestImage("healthheart.png");
 
-var bonus = {
-    picture: requestImage("mr-pink.png"),
-    xPosition:random(20, (sizeX-140)),
-    yPosition:random(20, (sizeY-140))};
-
-
+Character.prototype.keyPressed = function () {
+    player1.keys [key.code] = true;
+    player2.keys [key.code] = true;
+};
+/*
 var keyPressed = function () { 
     graczJeden.keys [key.code] = true;
     graczDwa.keys [key.code] = true;
 };
- 
+ */
+Character.prototype.keyReleased = function () {
+    player1.keys [key.code] = false;
+    player2.keys [key.code] = false;
+
+};
+/*
 var keyReleased = function () { 
     graczJeden.keys [key.code] = false; 
     graczDwa.keys [key.code] = false; 
+};
+*/
+Character.prototype.up = function() {
+    this.yPosition -= this.speed;
+};
+Character.prototype.down = function() {
+    this.yPosition += this.speed;
+};
+Character.prototype.right = function() {
+    this.xPosition += this.speed;
+};
+Character.prototype.left = function() {
+    this.xPosition -= this.speed;
 };
 
 
@@ -77,26 +88,24 @@ Character.prototype.draw = function() {
  image (this.picture, this.xPosition, this.yPosition, this.width, this.height);
 };
 
-
-
-
-
-
 draw =function () {
     //rysowanie tla
-   background (204, 247, 255);
+    background (204, 247, 255);
 
     // rysowanie graczy
-    //image ((graczJeden.picture), graczJeden.xPosition, graczJeden.yPosition, 40, 80);
-    //image ((graczDwa.picture), graczDwa.xPosition, graczDwa.yPosition, 40, 80);
     player1.draw();
     player2.draw();
 
     // rysowanie bonus
-    image ((bonus.picture), bonus.xPosition, bonus.yPosition, 40, 40);
+    bonus.draw();
+    // poruszanie sie graczJeden
+    // w prawo przycisk D
+    if (keyPressed && player1.keys [100] && player1.xPosition<(sizeX-35)) {
+       player1.right();
+    };
     /*
     // poruszanie sie graczJeden
-    if(keyPressed && graczJeden.keys[100] && graczJeden.xPosition<(sizeX-35)) {
+    if(keyPressed && graczJeden.keys [100] && graczJeden.xPosition<(sizeX-35)) {
         // w prawo przycisk D
         graczJeden.xPosition ++;
         }
@@ -170,8 +179,8 @@ draw =function () {
    */
     textSize(18);
     fill(0,0,0);
-    text("Punkty Gracz 1: " + player1.points, 20, 30);
-    text("Punkty Gracz 2: " + player2.points, 20, 59);
+    text("Punkty " + player1.name + ": " + player1.points, 20, 30);
+    text("Punkty " + player2.name + ": " + player2.points, 20, 59);
 
 
 
