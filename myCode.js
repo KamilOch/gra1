@@ -5,45 +5,59 @@ var sizeX = 600;
 var sizeY = 600;
 
 size(sizeX, sizeY);
-frameRate(30);
+frameRate(60);
 
 
 //Sterowanie graczami , strzalkami , animacja , 
 
 // Konstruktor
-/*
-var Character = function (nickName, picture,xPosition, yPosition){
-    this nickName;
-    this.picture;
-    this.xPosition;
-    this.yPosition;
+
+var Character = function (config){
+    this.name = config.name;
+    this.picture = config.picture;
+    this.xPosition = config.xPosition;
+    this.yPosition = config.yPosition;
     this.keys [];
-    this.points;
+    this.points = 0;
+    this.width = config.width ||40;
+    this.height = config.height || 80;
 };
-*/
 
 
-//var graczJeden = new Character ("Gracz 1", requestImage("CharacterBoy.png"),50,150);
-//var graczDwa = new Character ("Gracz 2",requestImage("CharacterCatGirl.png"), 250, 150);
 
-var graczJeden = {  
-    obrazek: requestImage("CharacterBoy.png"),
+var player1 = new Character ({
+name = "Gracz 1",
+picture: requestImage("CharacterBoy.png"),
+xPosition: sizeX*1/8,
+yPosition: sizeY*1/3
+});
+
+var player2 = new Character ({
+name: "Gracz 2",
+picture: requestImage("CharacterCatGirl.png"),
+xPosition: sizeX*6/8,
+yPosition: sizeY*1/3
+});
+
+/*
+var graczJeden = {
+    picture: requestImage("CharacterBoy.png"),
     xPosition: sizeX*1/8,
     yPosition: sizeY*1/3,
     keys: [],
-    punkty: 0};
-    
+    points: 0};
+
 var graczDwa = {  
-    obrazek: requestImage("CharacterCatGirl.png"),
+    picture: requestImage("CharacterCatGirl.png"),
     xPosition: sizeX*6/8,
     yPosition: sizeY*1/3,
     keys: [],
-    punkty: 0};
-
+    points: 0};
+*/
 var serce = requestImage("healthheart.png");
 
 var bonus = {
-    obrazek: requestImage("mr-pink.png"),
+    picture: requestImage("mr-pink.png"),
     xPosition:random(20, (sizeX-140)),
     yPosition:random(20, (sizeY-140))};
 
@@ -59,15 +73,27 @@ var keyReleased = function () {
 };
 
 
+Character.prototype.draw = function() {
+    //background (204, 247, 255);
+ // rysowanie graczy
+ image (this.picture, this.xPosition, this.yPosition, this.width, this.height);
+};
+
+
+
+
+
 draw =function () {
     //rysowanie tla
     background (204, 247, 255);
-    
+
     // rysowanie graczy
-    image ((graczJeden.obrazek), graczJeden.xPosition, graczJeden.yPosition, 40, 80);   
-    image ((graczDwa.obrazek), graczDwa.xPosition, graczDwa.yPosition, 40, 80);
+    //image ((graczJeden.picture), graczJeden.xPosition, graczJeden.yPosition, 40, 80);
+    //image ((graczDwa.picture), graczDwa.xPosition, graczDwa.yPosition, 40, 80);
+
+
     // rysowanie bonus
-    image ((bonus.obrazek), bonus.xPosition, bonus.yPosition, 40, 40);
+    image ((bonus.picture), bonus.xPosition, bonus.yPosition, 40, 40);
     
     // poruszanie sie graczJeden
     if(keyPressed && graczJeden.keys[100] && graczJeden.xPosition<(sizeX-35)) {
@@ -126,7 +152,7 @@ draw =function () {
         //textSize(30);
         //text("Bonus Gracz",95,140);
         //image(getImage("space/1"),150,150,100,100);
-        graczJeden.punkty +=10;
+        graczJeden.points +=10;
         bonus.xPosition = random(20, 260);
         bonus.yPosition = random(20, 260);
         
@@ -137,16 +163,21 @@ draw =function () {
         //textSize(30);
         //text("Bonus Gracz",95,140);
         //image(getImage("space/2"),150,150,100,100);
-        graczDwa.punkty +=10;
+        graczDwa.points +=10;
         bonus.xPosition = random(20, 260);
         bonus.yPosition = random(20, 260);
     }
    
     textSize(18);
     fill(0,0,0);
-    text("Punkty Gracz 1: " + graczJeden.punkty, 20, 30);
-    text("Punkty Gracz 2: " + graczDwa.punkty, 20, 59);
+    text("Punkty Gracz 1: " + graczJeden.points, 20, 30);
+    text("Punkty Gracz 2: " + graczDwa.points, 20, 59);
+
+    player1.draw();
+    player2.draw();
+
 };
+
 
 
 
