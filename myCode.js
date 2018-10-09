@@ -22,7 +22,7 @@ var Character = function (config){
     this.width = config.width ||40;
     this.height = config.height || 80;
     this.speed = config.speed || 1;
-    this.random = config.random;
+
 };
 
 
@@ -152,17 +152,14 @@ draw =function () {
     //gracz 1
     if(checkForPlayer1Catch()){
         player1.points +=10;
-       // bonus.xPosition = random(20, 260);
-       // bonus.yPosition = random(20, 260);
-       bonus.xPosition = random();
-       bonus.yPosition = random();
+        bonus.random();
 
     };
    //gracz 2
     if(checkForPlayer2Catch()){
         player2.points +=10;
-        bonus.xPosition = random();
-        bonus.yPosition = random();
+        bonus.random();
+
 
      };
     //Wyswietlanie punktow
