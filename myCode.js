@@ -22,6 +22,7 @@ var Character = function (config){
     this.width = config.width ||40;
     this.height = config.height || 80;
     this.speed = config.speed || 1;
+    this.random = config.random;
 };
 
 
@@ -69,6 +70,12 @@ Character.prototype.right = function() {
 Character.prototype.left = function() {
     this.xPosition -= this.speed;
 };
+Character.prototype.random = function() {
+   this.xPosition = random (20, (sizeX-140));
+   this.yPosition = random (20, (sizeY-140));
+
+};
+
 
 var checkForPlayerCollision = function() {
 return abs(player1.xPosition - player2.xPosition) <=20 &&
@@ -147,13 +154,15 @@ draw =function () {
         player1.points +=10;
        // bonus.xPosition = random(20, 260);
        // bonus.yPosition = random(20, 260);
+       bonus.xPosition = random();
+       bonus.yPosition = random();
 
     };
    //gracz 2
     if(checkForPlayer2Catch()){
         player2.points +=10;
-        bonus.xPosition();
-        bonus.yPosition();
+        bonus.xPosition = random();
+        bonus.yPosition = random();
 
      };
     //Wyswietlanie punktow
