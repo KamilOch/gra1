@@ -22,7 +22,7 @@ var Character = function (config){
     this.width = config.width ||40;
     this.height = config.height || 80;
     this.speed = config.speed || 1;
-
+    this.score;
 };
 
 
@@ -73,9 +73,10 @@ Character.prototype.left = function() {
 Character.prototype.random = function() {
    this.xPosition = random (20, (sizeX-140));
    this.yPosition = random (20, (sizeY-140));
-
 };
-
+Character.prototype.score = function() {
+    this.points +=10;
+};
 
 var checkForPlayerCollision = function() {
 return abs(player1.xPosition - player2.xPosition) <=20 &&
@@ -151,13 +152,15 @@ draw =function () {
     // gdy gracz spotyka bobus dostaja punkty
     //gracz 1
     if(checkForPlayer1Catch()){
-        player1.points +=10;
+        //player1.points +=10;
+        player1.score();
         bonus.random();
 
     };
    //gracz 2
     if(checkForPlayer2Catch()){
-        player2.points +=10;
+       // player2.points +=10;
+        player2.score();
         bonus.random();
 
 
