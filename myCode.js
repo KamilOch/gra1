@@ -18,10 +18,10 @@ var Character = function (config){
     this.xPosition = config.xPosition;
     this.yPosition = config.yPosition;
     this.keys = [];
-    this.keyUP = [];
-    this.keyDown = [];
-    this.keyLeft = [];
-    this.keyRight = [];
+    this.keyUP = config.keyUP;
+    this.keyDown = config.keyDown;
+    this.keyLeft = config.keyLeft;
+    this.keyRight = config.keyRight;
     this.points = 0;
     this.width = config.width ||40;
     this.height = config.height || 80;
@@ -36,18 +36,21 @@ name: "Gracz 1",
 picture: requestImage("CharacterBoy.png"),
 xPosition: sizeX*1/8,
 yPosition: sizeY*1/3,
-keyUP: [119],
-keyDown: [115],
-keyRight: [100],
-keyLeft: [97]
-
+keyUP: 119,
+keyDown: 115,
+keyRight: 100,
+keyLeft: 97
 });
 // nowy gracz 2
 var player2 = new Character ({
 name: "Gracz 2",
 picture: requestImage("CharacterCatGirl.png"),
 xPosition: sizeX*6/8,
-yPosition: sizeY*1/3
+yPosition: sizeY*1/3,
+keyUP: 105,
+keyDown: 107,
+keyRight: 108,
+keyLeft: 106
 });
 // nowy bonus
 var bonus = new Character ({
@@ -119,37 +122,37 @@ draw =function () {
     bonus.draw();
     // poruszanie sie graczJeden
     // w prawo przycisk D
-    if (keyPressed && player1.keyRight && player1.xPosition<(sizeX-35)) {
+    if (keyPressed && player1.keys [player1.keyRight] && player1.xPosition<(sizeX-35)) {
         player1.right();
     };
     // w lewo przycisk A
-    if (keyPressed && player1.keyLeft && player1.xPosition>-5) {
+    if (keyPressed && player1.keys [player1.keyLeft] && player1.xPosition>-5) {
         player1.left();
     };
     // do gory przycik W
-    if (keyPressed && player1.keyUP && player1.yPosition>-30) {
+    if (keyPressed && player1.keys [player1.keyUP] && player1.yPosition>-30) {
        player1.up();
     };
     //do dolu przycisk S
-    if (keyPressed && player1.keyDown && player1.yPosition<(sizeY-65)) {
+    if (keyPressed && player1.keys [player1.keyDown] && player1.yPosition<(sizeY-65)) {
     player1.down();
     };
 
     // poruszanie sie graczDwa
     // w prawo przycisk L
-    if (keyPressed && player2.keys [108] && player2.xPosition<(sizeX-35)) {
+    if (keyPressed && player2.keys [player2.keyRight] && player2.xPosition<(sizeX-35)) {
     player2.right();
     };
     // w lewo przycisk J
-    if (keyPressed && player2.keys [106] && player2.xPosition>-5){
+    if (keyPressed && player2.keys [player2.keyLeft] && player2.xPosition>-5){
     player2.left();
     };
     // do gory przycik I
-    if (keyPressed && player2.keys [105] && player2.yPosition>-30){
+    if (keyPressed && player2.keys [player2.keyUP] && player2.yPosition>-30){
     player2.up();
     };
     //do dolu przycisk K
-    if (keyPressed && player2.keys[107] && player2.yPosition<(sizeY-65)){
+    if (keyPressed && player2.keys[player2.keyDown] && player2.yPosition<(sizeY-65)){
     player2.down();
     };
 
