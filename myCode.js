@@ -90,6 +90,24 @@ Character.prototype.score = function() {
     this.points +=10;
 };
 
+
+Character.prototype.move = function() {
+   // Right
+   if (keyPressed && this.keys [this.keyRight] && this.xPosition<(sizeX-35)){
+   return true;
+   };
+   // Left
+   //if (keyPressed && player1.keys [player1.keyLeft] && player1.xPosition>-5){
+   //return true;
+   //};
+   // UP
+  // keyPressed && player1.keys [player1.keyUP] && player1.yPosition>-30
+   // Down
+  // keyPressed && player1.keys [player1.keyDown] && player1.yPosition<(sizeY-65)
+
+};
+
+
 var checkForPlayerCollision = function() {
 return abs(player1.xPosition - player2.xPosition) <=20 &&
        abs(player1.yPosition - player2.yPosition)<=20;
@@ -122,7 +140,7 @@ draw =function () {
     bonus.draw();
     // poruszanie sie graczJeden
     // w prawo przycisk D
-    if (keyPressed && player1.keys [player1.keyRight] && player1.xPosition<(sizeX-35)) {
+    if (player1.move()) {
         player1.right();
     };
     // w lewo przycisk A
@@ -164,18 +182,13 @@ draw =function () {
     // gdy gracz spotyka bobus dostaja punkty
     //gracz 1
     if(checkForPlayer1Catch()){
-        //player1.points +=10;
         player1.score();
         bonus.random();
-
     };
    //gracz 2
     if(checkForPlayer2Catch()){
-       // player2.points +=10;
         player2.score();
         bonus.random();
-
-
      };
     //Wyswietlanie punktow
     textSize(18);
