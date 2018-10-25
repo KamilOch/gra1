@@ -12,16 +12,38 @@ frameRate(60);
 
 // Konstruktor
 
+var Klawiatura = function (config){
+    this.keyUP = config.keyUP;
+    this.keyDown = config.keyDown;
+    this.keyLeft = config.keyLeft;
+    this.keyRight = config.keyRight;
+};
+
+var klawiaturaPlayer1 = new Klawiatura ({
+keyUP: 119,
+keyDown: 115,
+keyRight: 100,
+keyLeft: 97
+});
+
+var klawiaturaPlayer2 = new Klawiatura ({
+keyUP: 105,
+keyDown: 107,
+keyRight: 108,
+keyLeft: 106
+});
+
 var Character = function (config){
     this.name = config.name;
     this.picture = config.picture;
     this.xPosition = config.xPosition;
     this.yPosition = config.yPosition;
-    this.keys = [];
-    this.keyUP = config.keyUP;
-    this.keyDown = config.keyDown;
-    this.keyLeft = config.keyLeft;
-    this.keyRight = config.keyRight;
+    //this.keys = [];
+    this.klawiatura = config.klawiatura;
+    //this.keyUP = config.keyUP;
+    //this.keyDown = config.keyDown;
+    //this.keyLeft = config.keyLeft;
+    //this.keyRight = config.keyRight;
     this.points = 0;
     this.width = config.width ||40;
     this.height = config.height || 80;
@@ -36,10 +58,11 @@ name: "Gracz 1",
 picture: requestImage("CharacterBoy.png"),
 xPosition: sizeX*1/8,
 yPosition: sizeY*1/3,
-keyUP: 119,
-keyDown: 115,
-keyRight: 100,
-keyLeft: 97
+klawiatura: klawiaturaPlayer1
+//keyUP: 119,
+//keyDown: 115,
+//keyRight: 100,
+//keyLeft: 97
 });
 
 // nowy gracz 2
@@ -48,10 +71,11 @@ name: "Gracz 2",
 picture: requestImage("CharacterCatGirl.png"),
 xPosition: sizeX*6/8,
 yPosition: sizeY*1/3,
-keyUP: 105,
-keyDown: 107,
-keyRight: 108,
-keyLeft: 106
+klawiatura: klawiaturaPlayer2
+//keyUP: 105,
+//keyDown: 107,
+//keyRight: 108,
+//keyLeft: 106
 });
 
 // nowy bonus
@@ -65,13 +89,13 @@ var bonus = new Character ({
 var serce = requestImage("healthheart.png");
 
 var keyPressed = function () {
-   player1.keys [key.code] = true;
-   player2.keys [key.code] = true;
+   player1.klawiatura [key.code] = true;
+   player2.klawiatura [key.code] = true;
 };
 
 var keyReleased = function () {
-    player1.keys [key.code] = false;
-    player2.keys [key.code] = false;
+    player1.klawiatura [key.code] = false;
+    player2.klawiatura [key.code] = false;
 };
 
 Character.prototype.up = function() {
@@ -102,19 +126,19 @@ Character.prototype.score = function() {
 
 Character.prototype.move = function() {
     // w prawo
-    if (keyPressed && this.keys [this.keyRight] && this.xPosition<(sizeX-35)) {
+    if (keyPressed && this.klawiatura [this.klawiatura.keyRight] && this.xPosition<(sizeX-35)) {
     this.right();
     };
     // w lewo
-    if (keyPressed && this.keys [this.keyLeft] && this.xPosition>-5){
+    if (keyPressed && this.klawiatura [this.klawiatura.keyLeft] && this.xPosition>-5){
     this.left();
     };
     // do gory
-    if (keyPressed && this.keys [this.keyUP] && this.yPosition>-30){
+    if (keyPressed && this.klawiatura [this.klawiatura.keyUP] && this.yPosition>-30){
     this.up();
     };
     //do dolu
-    if (keyPressed && this.keys[this.keyDown] && this.yPosition<(sizeY-65)){
+    if (keyPressed && this.klawiatura[this.klawiatura.keyDown] && this.yPosition<(sizeY-65)){
     this.down();
     };
 };
@@ -132,6 +156,12 @@ var checkForPlayer2Catch = function() {
            abs(player2.yPosition - (bonus.yPosition-30))<35;
 };
 
+var funkcjaSerce = function() {
+// gdy gracze sie spotkaja(sa w mniejszej odleglosci niz 20 pixeli), pojawia sie obrazek (LEPSZA WERSJA)
+    if (checkForPlayerCollision()) {
+    image(serce,sizeX*1/2 -50,sizeY*1/2-50,100,100);
+       };
+};
 
 Character.prototype.draw = function() {
     // rysowanie graczy
@@ -152,12 +182,13 @@ draw =function () {
     // poruszanie sie graczy
     player1.move();
     player2.move();
-
+/*
     // gdy gracze sie spotkaja(sa w mniejszej odleglosci niz 20 pixeli), pojawia sie obrazek (LEPSZA WERSJA)
     if(checkForPlayerCollision()){
         image(serce,sizeX*1/2 -50,sizeY*1/2-50,100,100);
     };
-
+*/
+    funkcjaSerce();
     // gdy gracz spotyka bobus dostaja punkty
     //gracz 1
     if(checkForPlayer1Catch()){
