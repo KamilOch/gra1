@@ -20,18 +20,44 @@ var Klawiatura = function (config){
 };
 
 var klawiaturaPlayer1 = new Klawiatura ({
-keyUP: 119,
-keyDown: 115,
-keyRight: 100,
-keyLeft: 97
+    keyUP: 119,
+    keyDown: 115,
+    keyRight: 100,
+    keyLeft: 97
 });
 
 var klawiaturaPlayer2 = new Klawiatura ({
-keyUP: 105,
-keyDown: 107,
-keyRight: 108,
-keyLeft: 106
+    keyUP: 105,
+    keyDown: 107,
+    keyRight: 108,
+    keyLeft: 106
+
 });
+
+var komputerKeyUp;
+var komputerKeyDown;
+var komputerKeyRight;
+var komputerKeyLeft;
+
+var KlawiaturaKomputer = function (config){
+    this.keyUP = config.keyUP;
+    this.keyDown = config.keyDown;
+    this.keyLeft = config.keyLeft;
+    this.keyRight = config.keyRight;
+};
+
+var klawiaturaKomputer = new KlawiaturaKomputer ({
+    keyUP: komputerKeyUp,
+    keyDown: komputerKeyDown,
+    keyRight: komputerKeyRight,
+    keyLeft: komputerKeyLeft
+});
+
+komputerKeyUp = true;
+
+// proba zastapienia kplawiatury
+klawiaturaPlayer2 = klawiaturaKomputer;
+
 
 var Character = function (config){
     this.name = config.name;
@@ -91,11 +117,13 @@ var serce = requestImage("healthheart.png");
 var keyPressed = function () {
    player1.klawiatura [key.code] = true;
    player2.klawiatura [key.code] = true;
+   player2.klawiaturaKomputer = true;
 };
 
 var keyReleased = function () {
     player1.klawiatura [key.code] = false;
     player2.klawiatura [key.code] = false;
+    player2.klawiaturaKomputer = false;
 };
 
 Character.prototype.up = function() {
