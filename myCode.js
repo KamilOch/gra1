@@ -10,6 +10,8 @@ frameRate(60);
 
 //Sterowanie graczami , strzalkami , animacja , 
 
+//Nowa Klawiatura
+
 // Konstruktor
 
 var Character = function (config){
