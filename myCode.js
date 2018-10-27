@@ -31,6 +31,30 @@ Klawiatura.prototype.czyIdzieDoDolu = function () {
     return keyPressed && this [this.keyDown];
 };
 
+var KlawiaturaBot = function(){
+};
+
+KlawiaturaBot.prototype.czyIdzieWPrawo = function () {
+    return //true * losowy (od 3 do 5 sec) czas podtrzymania
+};
+KlawiaturaBot.prototype.czyIdzieWLewo = function () {
+    return oddawajPrawdePrzezLosowyCzas();//true * losowy (od 3 do 5 sec) czas podtrzymania
+};
+KlawiaturaBot.prototype.czyIdzieDoGory = function () {
+    return //true * losowy (od 3 do 5 sec) czas podtrzymania
+};
+KlawiaturaBot.prototype.czyIdzieDoDolu = function () {
+    return //true * losowy (od 3 do 5 sec) czas podtrzymania
+};
+
+// Test
+var oddawajPrawdePrzezLosowyCzas = function () {
+    var startTime = Date.now();
+    var czaPpodtrzymania = 5;
+    return ((czaPpodtrzymania - Math.floor((Date.now()-startTime)/1000))>=0)
+}
+
+
 var klawiatura1 = new Klawiatura ({
     keyUP: 119,
     keyDown: 115,
@@ -43,6 +67,10 @@ var klawiatura2 = new Klawiatura ({
     keyRight: 108,
     keyLeft: 106
 });
+
+klawiatura2 = new KlawiaturaBot ();
+
+
 // Konstruktor
 
 var Character = function (config){
