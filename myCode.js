@@ -11,7 +11,38 @@ frameRate(60);
 //Sterowanie graczami , strzalkami , animacja , 
 
 //Nowa Klawiatura
+var Klawiatura = function(config){
+    this.keyUP = config.keyUP;
+    this.keyDown = config.keyDown;
+    this.keyLeft = config.keyLeft;
+    this.keyRight = config.keyRight;
+}
 
+Klawiatura.prototype.czyIdzieWPrawo = function () {
+    return keyPressed && this [this.keyRight];
+};
+Klawiatura.prototype.czyIdzieWLewo = function () {
+    return keyPressed && this [this.keyLeft];
+};
+Klawiatura.prototype.czyIdzieDoGory = function () {
+    return keyPressed && this [this.keyUP];
+};
+Klawiatura.prototype.czyIdzieDoDolu = function () {
+    return keyPressed && this [this.keyDown];
+};
+
+var klawiatura1 = new Klawiatura ({
+    keyUP: 119,
+    keyDown: 115,
+    keyRight: 100,
+    keyLeft: 97
+});
+var klawiatura2 = new Klawiatura ({
+    keyUP: 105,
+    keyDown: 107,
+    keyRight: 108,
+    keyLeft: 106
+});
 // Konstruktor
 
 var Character = function (config){
@@ -19,16 +50,12 @@ var Character = function (config){
     this.picture = config.picture;
     this.xPosition = config.xPosition;
     this.yPosition = config.yPosition;
-    this.keys = [];
-    this.keyUP = config.keyUP;
-    this.keyDown = config.keyDown;
-    this.keyLeft = config.keyLeft;
-    this.keyRight = config.keyRight;
     this.points = 0;
     this.width = config.width ||40;
     this.height = config.height || 80;
     this.speed = config.speed || 1;
     this.score;
+    this.klawiatura = config.klawiatura;
 };
 
 
@@ -38,10 +65,7 @@ name: "Gracz 1",
 picture: requestImage("CharacterBoy.png"),
 xPosition: sizeX*1/8,
 yPosition: sizeY*1/3,
-keyUP: 119,
-keyDown: 115,
-keyRight: 100,
-keyLeft: 97
+klawiatura: klawiatura1
 });
 
 // nowy gracz 2
@@ -50,10 +74,7 @@ name: "Gracz 2",
 picture: requestImage("CharacterCatGirl.png"),
 xPosition: sizeX*6/8,
 yPosition: sizeY*1/3,
-keyUP: 105,
-keyDown: 107,
-keyRight: 108,
-keyLeft: 106
+klawiatura: klawiatura2
 });
 
 // nowy bonus
@@ -67,13 +88,13 @@ var bonus = new Character ({
 var serce = requestImage("healthheart.png");
 
 var keyPressed = function () {
-   player1.keys [key.code] = true;
-   player2.keys [key.code] = true;
+    player1.klawiatura [key.code] = true;
+    player2.klawiatura [key.code] = true;
 };
 
 var keyReleased = function () {
-    player1.keys [key.code] = false;
-    player2.keys [key.code] = false;
+    player1.klawiatura [key.code] = false;
+    player2.klawiatura [key.code] = false;
 };
 
 Character.prototype.up = function() {
@@ -104,21 +125,28 @@ Character.prototype.score = function() {
 
 Character.prototype.move = function() {
     // w prawo
-    if (keyPressed && this.keys [this.keyRight] && this.xPosition<(sizeX-35)) {
-    this.right();
+    if (this.klawiatura.czyIdzieWPrawo() && this.xPosition<(sizeX-35)) {
+        this.right();
+        };
+        // w lewo
+        if (this.klawiatura.czyIdzieWLewo () && this.xPosition>-5){
+        this.left();
+        };
+        // do gory
+        if (this.klawiatura.czyIdzieDoGory () && this.yPosition>-30){
+        this.up();
+        };
+        //do dolu
+        if (this.klawiatura.czyIdzieDoDolu () && this.yPosition<(sizeY-65)){
+        this.down();
     };
-    // w lewo
-    if (keyPressed && this.keys [this.keyLeft] && this.xPosition>-5){
-    this.left();
-    };
-    // do gory
-    if (keyPressed && this.keys [this.keyUP] && this.yPosition>-30){
-    this.up();
-    };
-    //do dolu
-    if (keyPressed && this.keys[this.keyDown] && this.yPosition<(sizeY-65)){
-    this.down();
-    };
+};
+
+var funkcjaSerce = function() {
+// gdy gracze sie spotkaja(sa w mniejszej odleglosci niz 20 pixeli), pojawia sie obrazek (LEPSZA WERSJA)
+    if (checkForPlayerCollision()) {
+    image(serce,sizeX*1/2 -50,sizeY*1/2-50,100,100);
+       };
 };
 
 var checkForPlayerCollision = function() {
@@ -156,9 +184,7 @@ draw =function () {
     player2.move();
 
     // gdy gracze sie spotkaja(sa w mniejszej odleglosci niz 20 pixeli), pojawia sie obrazek (LEPSZA WERSJA)
-    if(checkForPlayerCollision()){
-        image(serce,sizeX*1/2 -50,sizeY*1/2-50,100,100);
-    };
+    funkcjaSerce();
 
     // gdy gracz spotyka bobus dostaja punkty
     //gracz 1
