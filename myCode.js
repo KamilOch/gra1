@@ -7,6 +7,7 @@ var sizeY = 600;
 size(sizeX, sizeY);
 frameRate(60);
 
+var startTime = Date.now();
 
 //Sterowanie graczami , strzalkami , animacja , 
 
@@ -35,23 +36,27 @@ var KlawiaturaBot = function(){
 };
 
 KlawiaturaBot.prototype.czyIdzieWPrawo = function () {
-    return //true * losowy (od 3 do 5 sec) czas podtrzymania
+    return player2.xPosition<bonus.xPosition; // automatyczne podazanie za bonusem
 };
 KlawiaturaBot.prototype.czyIdzieWLewo = function () {
-    return oddawajPrawdePrzezLosowyCzas();//true * losowy (od 3 do 5 sec) czas podtrzymania
+    return bonus.xPosition<player2.xPosition; // automatyczne podazanie za bonusem
+   //true * losowy (od 3 do 5 sec) czas podtrzymania
+   //oddawajPrawdePrzezLosowyCzas();
+
+
 };
 KlawiaturaBot.prototype.czyIdzieDoGory = function () {
-    return //true * losowy (od 3 do 5 sec) czas podtrzymania
+    return bonus.yPosition<player2.yPosition;
 };
 KlawiaturaBot.prototype.czyIdzieDoDolu = function () {
-    return //true * losowy (od 3 do 5 sec) czas podtrzymania
+    return player2.yPosition<bonus.yPosition;
 };
 
 // Test
 var oddawajPrawdePrzezLosowyCzas = function () {
-    var startTime = Date.now();
+
     var czaPpodtrzymania = 5;
-    return ((czaPpodtrzymania - Math.floor((Date.now()-startTime)/1000))>=0)
+    return ((czaPpodtrzymania - Math.floor((Date.now()-startTime)/1000))>=0 )
 }
 
 
