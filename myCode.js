@@ -55,9 +55,11 @@ var btn2 = new Button({
     label: "Game for one player and bot"
 });
 var btn3 = new Button({
-    x: 100,
-    y: 270,
-    label: "Game board 2 x 2"
+    x: (sizeX - 75) ,
+    y: 5,
+    width:  70,
+    height: 40,
+    label: "Reset"
 });
 
 Button.prototype.isMouseInside  = function(x, y) {
@@ -195,13 +197,36 @@ var mousePressed = function() {
             if (btn1.isMouseInside(mouseX,mouseY)) {
                 player1.klawiatura = klawiatura1;
                 player2.klawiatura = klawiatura2;
+                player2.points = 0;
+                player1.points = 0;
+                bonus.random();
+                player1.xPosition = sizeX*1/8;
+                player1.yPosition = sizeY*1/3;
+                player2.xPosition = sizeX*6/8;
+                player2.yPosition = sizeY*1/3;
+
                 game_state = 1;
+
             }
             else if (btn2.isMouseInside(mouseX,mouseY)) {
                     player1.klawiatura = klawiatura1;
                     klawiatura2 = new KlawiaturaBot ();
                     player2.klawiatura = klawiatura2;
+                    player2.points = 0;
+                    player1.points = 0;
+                    bonus.random();
+                    player1.xPosition = sizeX*1/8;
+                    player1.yPosition = sizeY*1/3;
+                    player2.xPosition = sizeX*6/8;
+                    player2.yPosition = sizeY*1/3;
+
                     game_state = 1;
+
+            }
+        }
+        else if (game_state === 1) {
+            if (btn3.isMouseInside(mouseX,mouseY)) {
+                game_state = 0;
             }
         }
 };
@@ -347,6 +372,7 @@ draw =function () {
 
         botSretowanySekundami();
 
+        btn3.draw();
     }
 };
 
