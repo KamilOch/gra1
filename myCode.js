@@ -173,7 +173,7 @@ var Character = function (config){
 
 // nowy gracz 1
 var player1 = new Character ({
-name: "Gracz 1",
+name: "Adam",
 picture: requestImage("CharacterBoy.png"),
 xPosition: sizeX*1/8,
 yPosition: sizeY*1/3,
@@ -182,7 +182,7 @@ yPosition: sizeY*1/3,
 
 // nowy gracz 2
 var player2 = new Character ({
-name: "Gracz 2",
+name: "Eva",
 picture: requestImage("CharacterCatGirl.png"),
 xPosition: sizeX*6/8,
 yPosition: sizeY*1/3,
@@ -323,6 +323,15 @@ Character.prototype.draw = function() {
     image (this.picture, this.xPosition, this.yPosition, this.width, this.height);
 };
 
+
+var wygrany = function () {
+    if (player1.points>player2.points){
+    return player1.name;
+    }
+    else return player2.name;
+};
+
+
 draw =function () {
     var title_red = color(255, 100, 50); // should be const
     var title_grn = color(13, 184, 67);  // should be const
@@ -368,8 +377,8 @@ draw =function () {
         //Wyswietlanie punktow
         textSize(18);
         fill(0,0,0);
-        text("Punkty " + player1.name + ": " + player1.points, 20, 30);
-        text("Punkty " + player2.name + ": " + player2.points, 20, 59);
+        text("Points " + player1.name + ": " + player1.points, 20, 30);
+        text("Points " + player2.name + ": " + player2.points, 20, 59);
 
         botSretowanySekundami();
 
@@ -390,8 +399,12 @@ draw =function () {
         fill(0,0,0);
         text ("GAME OVER",sizeX/8,sizeY/7);
         textSize(30);
-        text("Punkty " + player1.name + ": " + player1.points, sizeX/4, sizeY/2);
-        text("Punkty " + player2.name + ": " + player2.points, sizeX/4, sizeY/1.5);
+        text("Points " + player1.name + ": " + player1.points, sizeX/4, sizeY/2);
+        text("Points " + player2.name + ": " + player2.points, sizeX/4, sizeY/1.5);
+
+        fill(182,73,43);
+        text("Player " + wygrany() + " won!!!!! ", sizeX/4, sizeY/3);
+
         btn3.draw();
     }
 
