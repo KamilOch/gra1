@@ -7,7 +7,6 @@ var sizeY = 600;
 size(sizeX, sizeY);
 frameRate(60);
 
-var startTime = Date.now();
 
 //Sterowanie graczami , strzalkami , animacja , 
 
@@ -35,15 +34,12 @@ Klawiatura.prototype.czyIdzieDoDolu = function () {
 var KlawiaturaBot = function(){
 };
 
+/*
 KlawiaturaBot.prototype.czyIdzieWPrawo = function () {
     return player2.xPosition<bonus.xPosition; // automatyczne podazanie za bonusem
 };
 KlawiaturaBot.prototype.czyIdzieWLewo = function () {
     return bonus.xPosition<player2.xPosition; // automatyczne podazanie za bonusem
-   //true * losowy (od 3 do 5 sec) czas podtrzymania
-   //oddawajPrawdePrzezLosowyCzas();
-
-
 };
 KlawiaturaBot.prototype.czyIdzieDoGory = function () {
     return bonus.yPosition<player2.yPosition;
@@ -51,13 +47,33 @@ KlawiaturaBot.prototype.czyIdzieDoGory = function () {
 KlawiaturaBot.prototype.czyIdzieDoDolu = function () {
     return player2.yPosition<bonus.yPosition;
 };
+*/
 
-// Test
-var oddawajPrawdePrzezLosowyCzas = function () {
 
-    var czaPpodtrzymania = 5;
-    return ((czaPpodtrzymania - Math.floor((Date.now()-startTime)/1000))>=0 )
+
+
+function botSretowanySekundami() {
+    var d = new Date();
+    var n = d.getSeconds();
+    return n;
 }
+
+
+
+// inna wersja sterowania graczem2 (czasowa)
+KlawiaturaBot.prototype.czyIdzieWPrawo = function () {
+    return botSretowanySekundami() >21 && botSretowanySekundami() <30;
+};
+KlawiaturaBot.prototype.czyIdzieWLewo = function () {
+    return botSretowanySekundami() > 0 && botSretowanySekundami()< 10;
+};
+KlawiaturaBot.prototype.czyIdzieDoGory = function () {
+    return botSretowanySekundami() > 11 && botSretowanySekundami() < 20;
+};
+KlawiaturaBot.prototype.czyIdzieDoDolu = function () {
+    return botSretowanySekundami() > 31 && botSretowanySekundami() < 40;
+};
+
 
 
 var klawiatura1 = new Klawiatura ({
@@ -236,6 +252,7 @@ draw =function () {
     text("Punkty " + player1.name + ": " + player1.points, 20, 30);
     text("Punkty " + player2.name + ": " + player2.points, 20, 59);
 
+    botSretowanySekundami();
 };
 
 
