@@ -224,11 +224,12 @@ var mousePressed = function() {
 
             }
         }
-        else if (game_state === 1) {
+        else if (game_state !==0 ) {
             if (btn3.isMouseInside(mouseX,mouseY)) {
                 game_state = 0;
             }
         }
+
 };
 
 // nowy bonus
@@ -373,7 +374,28 @@ draw =function () {
         botSretowanySekundami();
 
         btn3.draw();
+
+        if (player1.points === 50){
+        game_state = 2};
+
+        if (player2.points === 50){
+        game_state = 2};
+      }
+
+    if (game_state === 2) {
+        background (204, 247, 255);
+
+        //Wyswietlanie punktow
+        textSize(70);
+        fill(0,0,0);
+        text ("GAME OVER",sizeX/8,sizeY/7);
+        textSize(30);
+        text("Punkty " + player1.name + ": " + player1.points, sizeX/4, sizeY/2);
+        text("Punkty " + player2.name + ": " + player2.points, sizeX/4, sizeY/1.5);
+        btn3.draw();
     }
+
+
 };
 
 
