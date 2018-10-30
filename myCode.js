@@ -7,6 +7,67 @@ var sizeY = 600;
 size(sizeX, sizeY);
 frameRate(60);
 
+//Ekrany
+var game_state = 0; // 0: Start screen. 1: Play. 3: Game over. 4:You Won.
+
+var Mysz = function() {
+}
+
+Mysz.prototype.jakiJestX = function(){
+    return mouseX;
+};
+Mysz.prototype.jakiJestY = function(){
+    return mouseY;
+};
+
+
+
+//Konstruktor do przyciskow
+
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 200;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+};
+
+Button.prototype.draw = function() {
+    fill(0, 0, 0);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(250, 250, 250);
+    textSize(19);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+10, this.y+this.height/4);
+};
+
+var btn1 = new Button({
+    x: sizeX/10,
+    y: 50,
+    width: 200,
+    label: "Game for two players"
+});
+
+var btn2 = new Button({
+    x: sizeX/10,
+    y: 300,
+    width: 260,
+    label: "Game for one player and bot"
+});
+var btn3 = new Button({
+    x: 100,
+    y: 270,
+    label: "Game board 2 x 2"
+});
+
+Button.prototype.isMouseInside  = function(x, y) {
+    return x >= this.x && x <= this.x + this.width  &&
+        y >= this.y && y <= this.y + this.height;
+};
+
+
+
+
 
 //Sterowanie graczami , strzalkami , animacja , 
 
@@ -34,7 +95,7 @@ Klawiatura.prototype.czyIdzieDoDolu = function () {
 var KlawiaturaBot = function(){
 };
 
-/*
+
 KlawiaturaBot.prototype.czyIdzieWPrawo = function () {
     return player2.xPosition<bonus.xPosition; // automatyczne podazanie za bonusem
 };
@@ -47,7 +108,7 @@ KlawiaturaBot.prototype.czyIdzieDoGory = function () {
 KlawiaturaBot.prototype.czyIdzieDoDolu = function () {
     return player2.yPosition<bonus.yPosition;
 };
-*/
+
 
 
 
@@ -58,7 +119,7 @@ function botSretowanySekundami() {
     return n;
 }
 
-
+/*
 
 // inna wersja sterowania graczem2 (czasowa)
 KlawiaturaBot.prototype.czyIdzieWPrawo = function () {
@@ -74,6 +135,7 @@ KlawiaturaBot.prototype.czyIdzieDoDolu = function () {
     return botSretowanySekundami() > 31 && botSretowanySekundami() < 40;
 };
 
+*/
 
 
 var klawiatura1 = new Klawiatura ({
@@ -82,14 +144,13 @@ var klawiatura1 = new Klawiatura ({
     keyRight: 100,
     keyLeft: 97
 });
+
 var klawiatura2 = new Klawiatura ({
     keyUP: 105,
     keyDown: 107,
     keyRight: 108,
     keyLeft: 106
 });
-
-klawiatura2 = new KlawiaturaBot ();
 
 
 // Konstruktor
@@ -114,7 +175,7 @@ name: "Gracz 1",
 picture: requestImage("CharacterBoy.png"),
 xPosition: sizeX*1/8,
 yPosition: sizeY*1/3,
-klawiatura: klawiatura1
+//klawiatura: klawiatura1
 });
 
 // nowy gracz 2
@@ -123,8 +184,27 @@ name: "Gracz 2",
 picture: requestImage("CharacterCatGirl.png"),
 xPosition: sizeX*6/8,
 yPosition: sizeY*1/3,
-klawiatura: klawiatura2
+//klawiatura: klawiatura2
 });
+
+
+// Wybor ilosci graczy =  podmiana klawiatury
+var mousePressed = function() {
+        //dla ekranu wyboru planszy
+        if (game_state === 0) {
+            if (btn1.isMouseInside(mouseX,mouseY)) {
+                player1.klawiatura = klawiatura1;
+                player2.klawiatura = klawiatura2;
+                game_state = 1;
+            }
+            else if (btn2.isMouseInside(mouseX,mouseY)) {
+                    player1.klawiatura = klawiatura1;
+                    klawiatura2 = new KlawiaturaBot ();
+                    player2.klawiatura = klawiatura2;
+                    game_state = 1;
+            }
+        }
+};
 
 // nowy bonus
 var bonus = new Character ({
@@ -218,41 +298,56 @@ Character.prototype.draw = function() {
 };
 
 draw =function () {
-    //rysowanie tla
-    background (204, 247, 255);
+    var title_red = color(255, 100, 50); // should be const
+    var title_grn = color(13, 184, 67);  // should be const
 
-    // rysowanie graczy
-    player1.draw();
-    player2.draw();
+    //Ekran startowy
+    if (game_state === 0) {
+        //rysowanie tla
+        background (204, 247, 255);
+        btn1.draw();
+        btn2.draw();
+    }
 
-    // rysowanie bonus
-    bonus.draw();
+    if (game_state === 1) {
 
-    // poruszanie sie graczy
-    player1.move();
-    player2.move();
+        //rysowanie tla
+        background (204, 247, 255);
 
-    // gdy gracze sie spotkaja(sa w mniejszej odleglosci niz 20 pixeli), pojawia sie obrazek (LEPSZA WERSJA)
-    funkcjaSerce();
+        // rysowanie graczy
+        player1.draw();
+        player2.draw();
 
-    // gdy gracz spotyka bobus dostaja punkty
-    //gracz 1
-    if(checkForPlayer1Catch()){
-        player1.score();
-        bonus.random();
-    };
-   //gracz 2
-    if(checkForPlayer2Catch()){
-        player2.score();
-        bonus.random();
-     };
-    //Wyswietlanie punktow
-    textSize(18);
-    fill(0,0,0);
-    text("Punkty " + player1.name + ": " + player1.points, 20, 30);
-    text("Punkty " + player2.name + ": " + player2.points, 20, 59);
+        // rysowanie bonus
+        bonus.draw();
 
-    botSretowanySekundami();
+        // poruszanie sie graczy
+        player1.move();
+        player2.move();
+
+        // gdy gracze sie spotkaja(sa w mniejszej odleglosci niz 20 pixeli), pojawia sie obrazek (LEPSZA WERSJA)
+        funkcjaSerce();
+
+        // gdy gracz spotyka bobus dostaja punkty
+        //gracz 1
+        if(checkForPlayer1Catch()){
+            player1.score();
+            bonus.random();
+        };
+       //gracz 2
+        if(checkForPlayer2Catch()){
+            player2.score();
+            bonus.random();
+         };
+        //Wyswietlanie punktow
+        textSize(18);
+        fill(0,0,0);
+        text("Punkty " + player1.name + ": " + player1.points, 20, 30);
+        text("Punkty " + player2.name + ": " + player2.points, 20, 59);
+
+        botSretowanySekundami();
+
+    }
 };
 
 
