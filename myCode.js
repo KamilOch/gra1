@@ -180,12 +180,6 @@ var mousePressed = function() {
         if (game_state === 0) {
             if (btn1.isMouseInside(mouseX,mouseY)) {
                 player1.klawiatura = klawiatura1;
-                klawiatura2 = new Klawiatura ({
-                    keyUP: 105,
-                    keyDown: 107,
-                    keyRight: 108,
-                    keyLeft: 106
-                });
                 player2.klawiatura = klawiatura2;
                 player2.points = 0;
                 player1.points = 0;
@@ -200,8 +194,7 @@ var mousePressed = function() {
             }
             else if (btn2.isMouseInside(mouseX,mouseY)) {
                     player1.klawiatura = klawiatura1;
-                    klawiatura2 = new KlawiaturaBot ();
-                    player2.klawiatura = klawiatura2;
+                    player2.klawiatura = new KlawiaturaBot ();
                     player2.points = 0;
                     player1.points = 0;
                     bonus.random();
