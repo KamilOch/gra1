@@ -121,23 +121,7 @@ function botSretowanySekundami() {
     return n;
 }
 
-/*
 
-// inna wersja sterowania graczem2 (czasowa)
-KlawiaturaBot.prototype.czyIdzieWPrawo = function () {
-    return botSretowanySekundami() >21 && botSretowanySekundami() <30;
-};
-KlawiaturaBot.prototype.czyIdzieWLewo = function () {
-    return botSretowanySekundami() > 0 && botSretowanySekundami()< 10;
-};
-KlawiaturaBot.prototype.czyIdzieDoGory = function () {
-    return botSretowanySekundami() > 11 && botSretowanySekundami() < 20;
-};
-KlawiaturaBot.prototype.czyIdzieDoDolu = function () {
-    return botSretowanySekundami() > 31 && botSretowanySekundami() < 40;
-};
-
-*/
 
 
 var klawiatura1 = new Klawiatura ({
